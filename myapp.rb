@@ -9,8 +9,26 @@ get '/' do
 end
 
 get '/laws' do
-  @laws = JSON.parse(File.read("./lib/laws.json"))
+  laws = JSON.parse(File.read("./lib/laws.json"))
   @q = params[:q]
+  @c = params[:c]
+  if @q==nil
+    @laws = laws
+  else
+    query = @q.split("　")
+    @laws = []
+    flag = @c=="a" ? true : false
+    laws.each do |l|
+      query.each do |q|
+        flag = l["title"].include?(q)
+        flag = !flag if @c=="o"
+        break if !flag
+      end
+      if flag&&@c=="a" || !flag&&@c=="o"
+        @laws.push(l)
+      end
+    end
+  end
   haml :laws
 end
 
