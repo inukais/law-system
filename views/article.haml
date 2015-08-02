@@ -1,12 +1,24 @@
+%h2= @art["title"]
 
 %p
   %span 原文を閲覧する：
   %a{href: "http://law.e-gov.go.jp/htmldata/#{@id[0,3]}/#{@id}.html"}= @art["title"]
 
-%p= @art
-
 - @art["body"].each do |n, m|
-  %p= n
-
-
+  - if n.include?("(")
+    %p.c2
+      %span.tit= n
+      %span …
+      %span= m["main"]
+  - else
+    %p.c1
+      %span.tit= n
+      %span …
+      %span= m["main"]
+  - if m["enum"] != nil
+    - m["enum"].each do |a, b|
+      %p.c3
+        %span.tit= a
+        %span …
+        %span= b
 
