@@ -1,0 +1,40 @@
+*
+	font-size: 12px
+
+body
+	overflow-y: scroll
+
+h1
+	text-align: center
+	border-bottom: 1px solid green
+	font-size: 40px
+
+table
+	border-collapse: collapse
+	margin: 0 auto
+	th
+		background: black
+		color: white
+		border: 1px solid white
+		padding: 5px
+	th,td
+		&:nth-child(1)
+			width: 80px
+		&:nth-child(2)
+			width: 80px
+		&:nth-child(3)
+			width: 250px
+		&:nth-child(4)
+			width: 300px
+	td
+		border: 1px solid black
+		padding: 3px
+		&:nth-child(4)
+			padding: 0
+		a
+			display: block
+			padding: 3px
+			&:hover
+				background: pink
+
+

@@ -1,0 +1,12 @@
+
+%p
+  %span 原文を閲覧する：
+  %a{href: "http://law.e-gov.go.jp/htmldata/#{@id[0,3]}/#{@id}.html"}= @art["title"]
+
+%p= @art
+
+- @art["body"].each do |n, m|
+  %p= n
+
+
+

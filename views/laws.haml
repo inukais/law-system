@@ -1,0 +1,33 @@
+
+
+%h1 法令一覧
+
+%form{method: "get"}
+  %p
+    %span 検索
+    %input{type: "text", name: "q"}
+  %p 文字列「#{@q}」を含む法令は下記の通りヒットしました。
+
+%table
+  %tr
+    %th id
+    %th 種類
+    %th 号
+    %th タイトル
+  - query = @q.split("　")
+  - flag = true
+  - @laws.each do |l|
+    - query.each do |q|
+      - flag = l["title"].include?(q)
+      - break if !flag
+    - if !l["id"].include?("F") && flag
+      %tr
+        %td= l["id"]
+        %td= l["group"]
+        %td= l["name"]
+        %td
+          %a{:href => "/laws/#{l["id"]}"}
+            %span= l["title"]
+
+
+
