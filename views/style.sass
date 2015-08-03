@@ -1,17 +1,55 @@
 *
 	font-size: 12px
+	margin: 0
+	padding: 0
+body
+	overflow-y: scroll
+.header
+	border: 0
+	position: fixed
+	width: 100%
+	background: green
+	border-bottom: 2px solid black
+	.menu
+		width: 880px
+		margin: 0 auto
+		border: 0
+		a
+			border: 0
+			border-left: 1px solid #0c0
+			display: block
+			text-decoration: none
+			font-size: 16px
+			line-height: 16px
+			font-weight: bold
+			float: left
+			color: white
+			padding: 20px
+			&:hover
+				background: #3f3
+				color: black
+hr
+	clear: both
+	height: 0
+	border: 0
+p
+	padding: 8px 0 8px 45px
+p.group
+	span
+		display: inline-block
+		width: 150px
+
 .container
 	width: 880px
 	margin: 0 auto
 	border-left: 1px solid #ccc
 	border-right: 1px solid #ccc
-	padding: 10px 20px
-body
-	overflow-y: scroll
+	padding: 75px 20px 10px 20px
 h1
 	text-align: center
 	border-bottom: 1px solid green
 	font-size: 40px
+	margin-bottom: 20px
 h2
 	text-align: center
 	font-size: 30px
@@ -38,20 +76,20 @@ table
 	th
 		background: black
 		color: white
-		border: 1px solid white
+		border: 1px solid #999
 		padding: 5px
 	th,td
 		&:nth-child(1)
-			width: 120px
+			width: 130px
 		&:nth-child(2)
-			width: 75px
+			width: 85px
 		&:nth-child(3)
-			width: 250px
+			width: 260px
 		&:nth-child(4)
-			width: 300px
+			width: 310px
 	td
 		border: 1px solid black
-		padding: 3px
+		padding: 3px 6px
 		&:nth-child(4)
 			padding: 0
 		a

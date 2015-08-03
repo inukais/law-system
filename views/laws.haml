@@ -2,17 +2,29 @@
 
 %h1 法令一覧
 
-%form{method: "get"}
+%form{method: "post"}
   %p
     %span 検索
     %input{type: "text", value: @q, name: "q"}
+    %span 　
     %span
-      %input{type:"radio", name:"c", value:"a", checked:""} AND検索
-      %input{type:"radio", name:"c", value:"o"} OR検索
+      %input{type:"radio", name:"q_c", value:"a", checked:""} AND検索　
+      %input{type:"radio", name:"q_c", value:"o"} OR検索　
+      - if @q_exam != nil
+        %input{type: "checkbox", name:"q_exam", value:"1", checked:""} 司法試験科目のみ　
+      - else
+        %input{type: "checkbox", name:"q_exam", value:"1"} 司法試験科目のみ　
+    %span
+      %input{type:"submit", value:"再検索"}
+  %p.group
+    - i=0
+    - 50.times do |g|
+      - i=i+1
+      %span
+        %input{type:"checkbox", name:"q_group", value:"#{i.to_s}", checked:""}= i.to_s + ": " + @group[i.to_s]
+
   %p
-    %span 文字列「
-    &= @q
-    %span 」を含む法令は下記の#{@laws.length}件がヒットしました。
+    %span 上記条件に該当する法令は下記の<strong>#{@laws.length}</strong>件がヒットしました。
 
 %table
   %tr
@@ -20,14 +32,19 @@
     %th 種類
     %th 号
     %th タイトル
-  - @laws.each do |l|
+  - @laws[0..199].each do |l|
     %tr
       %td= l["id"]
-      %td= l["group"]
+      - j=l["group"].split("_")[2]
+      - str=j+": "+@group[j]
+      %td= str
       %td= l["name"]
       %td
         %a{:href => "/laws/#{l["id"]}"}
           %span= l["title"]
+
+- if @laws.length > 200
+  %p 検索結果の数が多すぎたため、200件を越える部分はカットしました。
 
 
 

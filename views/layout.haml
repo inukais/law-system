@@ -3,9 +3,13 @@
   %head
     %meta{charset:"UTF-8"}
     %link{rel:"Stylesheet", href:"/tmp/style.css"}
-    %title test
+    %title 法令解析システム
   %body
-    %div.container
+    .header
+      .menu
+        %a{href:"/"} 法令解析システム
+        %a{href:"/laws"} 法令一覧
+        %hr
+    .container
       =yield
-
 

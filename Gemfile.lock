@@ -4,6 +4,7 @@ GEM
     backports (3.6.6)
     haml (4.0.6)
       tilt
+    mecab (0.996)
     multi_json (1.11.2)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -29,6 +30,7 @@ PLATFORMS
 
 DEPENDENCIES
   haml
+  mecab
   sass
   sinatra
   sinatra-contrib
