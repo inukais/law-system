@@ -1,18 +1,22 @@
 %h2= @art["title"]
 
 %p
-  %span 原文を閲覧する：
+  %span 原文を閲覧する（総務省法令検索システム）：
   %a{href: "http://law.e-gov.go.jp/htmldata/#{@id[0,3]}/#{@id}.html"}= @art["title"]
+%p ● をクリックすると類似の条文を検索することができます。
+%p
 
 - @art["body"].each do |n, m|
   - if n.include?("(")
     %p.c2
       %span.tit= n
+      %a{href:"/laws/#{@id}/#{n}"} ●
       %span …
       %span= m["main"]
   - else
     %p.c1
       %span.tit= n
+      %a{href:"/laws/#{@id}/#{n}"} ●
       %span …
       %span= m["main"]
   - if m["enum"] != nil
@@ -22,5 +26,4 @@
         %span …
         %span= b
 
-%p= @s.sim("東京都","新宿区")
 

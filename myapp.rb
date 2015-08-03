@@ -20,10 +20,11 @@ post '/laws' do
   @laws = JSON.parse(File.read("./lib/laws.json"))
   @group = JSON.parse(File.read("./lib/group.json"))
   @q = params[:q]
-  @q_c = params[:q_c]
+  @q_c = params[:q_c] # aならAND、oならOR検索
   @q_exam = params[:q_exam]
-  puts @q_group = params[:q_group]
+  @q_group = params[:q_group] # 選択されたものが配列になっている
 
+  # 検索ワードに引っかかるか
   if @q!=nil
     query = @q.split("　")
     flag = @q_c=="a" ? true : false
@@ -37,11 +38,21 @@ post '/laws' do
     end
     @laws.compact!
   end
+
+  # 司法試験科目の抽出
   if @q_exam != nil
     bar_exam = ["S21KE000", "M29HO089", "H18HO048", "M32HO048", 
                 "H17HO086", "H08HO109", "M40HO045", "S23HO131", 
                 "S22HO125", "S37HO160", "S37HO139"]
     @laws.map!{|l| l if bar_exam.include?(l["id"])  }
+    @laws.compact!
+  end
+
+  # ジャンルの抽出
+  if @q_group!=nil && @q_group.length<50
+    @laws.map! do |l|
+      l if @q_group.include?(l["group"].split("_")[2])
+    end
     @laws.compact!
   end
   haml :laws
@@ -50,8 +61,22 @@ end
 get '/laws/:id' do |id|
   @art = JSON.parse(File.read("./data/#{id}.json"))
   @id = id
-  @s = Similarity.new
   haml :article
+end
+
+get '/laws/:id/:num' do |id, num|
+  @art = JSON.parse(File.read("./data/#{id}.json"))
+  @id = id
+  @num = num
+  @s = Similarity.new
+  @this_art = @art["body"][@num]["main"]
+
+  # 条文をcos類似度の高い順に並べ替える
+  @output = @art["body"].sort_by do |n, m|
+    - @s.sim(@this_art, m["main"])
+  end
+
+  haml :similarity
 end
 
 get '/tmp/style.css' do

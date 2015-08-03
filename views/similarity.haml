@@ -1,0 +1,18 @@
+%h2 #{@art["title"]}第#{@num}条の解析
+
+%h3 条文
+
+%p.c1
+  %span.tit= @num
+  %span …
+  %span= @this_art
+
+- @output.each do |n, m|
+  %p
+    %span= n
+    %span …
+    %span= @s.sim(@this_art, m["main"])
+    %span …
+    %span= m["main"]
+
+
