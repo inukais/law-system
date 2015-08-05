@@ -13,16 +13,23 @@ end
 get '/laws' do
   @laws = JSON.parse(File.read("./lib/laws.json"))
   @group = JSON.parse(File.read("./lib/group.json"))
+  @type = JSON.parse(File.read("./lib/type.json"))
   haml :laws
 end
 
 post '/laws' do
   @laws = JSON.parse(File.read("./lib/laws.json"))
   @group = JSON.parse(File.read("./lib/group.json"))
+  @type = JSON.parse(File.read("./lib/type.json"))
   @q = params[:q]
   @q_c = params[:q_c] # aならAND、oならOR検索
   @q_exam = params[:q_exam]
-  @q_group = params[:q_group] # 選択されたものが配列になっている
+  # 選択されたものが配列になっている
+  @q_group = params[:q_group]
+  @q_type = params[:q_type]
+  # 年号指定
+  @q_first = params[:q_first].to_i
+  @q_last = params[:q_last].to_i
 
   # 検索ワードに引っかかるか
   if @q!=nil
@@ -55,6 +62,29 @@ post '/laws' do
     end
     @laws.compact!
   end
+
+  # タイプの抽出
+  if @q_type!=nil && @q_type.length<5
+    @laws.map! do |l|
+      l if @q_type.include?(l["id"].match(/[A-Z]+\d+([A-Z]+)\d+/)[1])
+    end
+    @laws.compact!
+  end
+
+  # 年号の指定
+  if @q_first>0
+    @laws.map! do |l|
+      l if @q_first <= l["id"].match(/([A-Z]+\d+)[A-Z]+\d+/)[1].era2anno
+    end
+    @laws.compact!
+  end
+  if @q_last>0
+    @laws.map! do |l|
+      l if @q_last >= l["id"].match(/([A-Z]+\d+)[A-Z]+\d+/)[1].era2anno
+    end
+    @laws.compact!
+  end
+
   haml :laws
 end
 
@@ -83,6 +113,17 @@ get '/tmp/style.css' do
   sass :style
 end
 
+class String
+  def era2anno
+    n = self[1..2].to_i
+    case self[0]
+      when "M" then 1966+n
+      when "T" then 1911+n
+      when "S" then 1925+n
+      when "H" then 1988+n
+    end
+  end
+end
 class Similarity
   def sim(str1,str2)
     vec = []; vec1 = []; vec2 = []

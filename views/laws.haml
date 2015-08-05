@@ -6,7 +6,7 @@
   %p 法律の名称を検索することができます。
   %p
     %span 検索
-    %input{style:"font-size:15px", type: "text", value: @q, name: "q"}
+    %input{type:"text", value: @q, name: "q"}
     %span 　
     %span
       %input{type:"radio", name:"q_c", value:"a", checked:""}
@@ -33,11 +33,33 @@
           %input{type:"checkbox", name:"q_group[]", value:"#{i.to_s}", checked:""}= i.to_s + ": " + @group[i.to_s]
         - else
           %input{type:"checkbox", name:"q_group[]", value:"#{i.to_s}"}= i.to_s + ": " + @group[i.to_s]
+  %p.type
+    %input.allCheck{type: "checkbox", checked:""}
+    %label{style:"font-size:15px;font-weight:bold;"} 全選択/全解除
+    %br
+    - i=-1
+    - 5.times do |g|
+      - i=i+1
+      %span
+        - if @q_type==nil || @q_type.include?(@type[i][0])
+          %input{type:"checkbox", name:"q_type[]", value:"#{@type[i][0]}", checked:""}= @type[i][0] + ": " + @type[i][1]
+        - else
+          %input{type:"checkbox", name:"q_type[]", value:"#{@type[i][0]}"}= @type[i][0] + ": " + @type[i][1]
+
+  %p
+    %span{style:"font-size:15px;font-weight:bold;"} 期間指定
+    %span (お探しの法令が交付された期間を西暦で指定してください)
+    %br
+    %input{style:"width:60px;text-align:center;", type:"text", name:"q_first", value:@q_first}
+    %label 年
+    %span ～
+    %input{style:"width:60px;text-align:center;", type:"text", name:"q_last", value:@q_last}
+    %label 年
 
   %p
     %span 上記条件に該当する法令は下記の<strong>#{@laws.length}</strong>件がヒットしました。
 
-%table
+%table.laws
   %tr
     %th ID
     %th 種類

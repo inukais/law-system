@@ -4,4 +4,5 @@ gem "sinatra-contrib"
 gem "haml"
 gem "sass"
 gem "mecab"
+gem "eventmachine"
 

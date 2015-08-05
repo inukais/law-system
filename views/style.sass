@@ -67,6 +67,12 @@ p.group
 	span
 		display: inline-block
 		width: 150px
+p.type
+	span
+		display: inline-block
+		width: 90px
+input[type=text]
+	font-size: 16px
 
 table
 	border-collapse: collapse
@@ -76,6 +82,16 @@ table
 		color: white
 		border: 1px solid #999
 		padding: 5px
+	td
+		border: 1px solid black
+		padding: 3px 6px
+		a
+			display: block
+			padding: 3px
+			&:hover
+				background: #ffe5cc
+				color: black
+table.laws
 	th,td
 		&:nth-child(1)
 			width: 130px
@@ -86,16 +102,16 @@ table
 		&:nth-child(4)
 			width: 260px
 	td
-		border: 1px solid black
-		padding: 3px 6px
 		&:nth-child(3)
 			padding: 0
-		a
-			display: block
-			padding: 3px
-			&:hover
-				background: #ffe5cc
-				color: black
+table.similarity
+	th,td
+		&:nth-child(1)
+			width: 50px
+		&:nth-child(2)
+			width: 50px
+		&:nth-child(3)
+			width: 600px
 
 /* article */
 

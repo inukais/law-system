@@ -7,12 +7,18 @@
   %span …
   %span= @this_art
 
-- @output.each do |n, m|
-  %p
-    %span= n
-    %span …
-    %span= @s.sim(@this_art, m["main"])
-    %span …
-    %span= m["main"]
+-# EM::defer do
+%table.similarity
+  %tr
+    %th 類似度
+    %th 条数
+    %th 条文
+  - @output.each do |n, m|
+    - sim = @s.sim(@this_art, m["main"]).round(2)
+    - if sim > 0.6 && n!=@num
+      %tr
+        %td= sim
+        %td= n
+        %td= m["main"]
 
 
