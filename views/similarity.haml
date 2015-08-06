@@ -1,24 +1,39 @@
 %h2 #{@art["title"]}第#{@num}条の解析
 
+%p
+  %a{href:"/laws/#{@id}"} #{@art["title"]}の条文に戻る
+
 %h3 条文
 
-%p.c1
-  %span.tit= @num
+%p.c4
+  %span.tit= "第"+@num+"条"
   %span …
   %span= @this_art
+  - if @art["body"][@num]["enum"].length != 0
+    - @art["body"][@num]["enum"].each do |e1,e2|
+      %br
+      %span{style:"margin-left:40px;color:red;font-weight:bold;"}= e1 + ": "
+      %span{style:"font-size:12px;"}= e2
 
--# EM::defer do
 %table.similarity
   %tr
     %th 類似度
     %th 条数
     %th 条文
+  - count=0
   - @output.each do |n, m|
     - sim = @s.sim(@this_art, m["main"]).round(2)
     - if sim > 0.6 && n!=@num
+      - count+=1
       %tr
         %td= sim
-        %td= n
-        %td= m["main"]
-
+        %td= "第"+n.to_s+"条"
+        %td
+          %span= m["main"]
+          - if m["enum"].length != 0
+            - m["enum"].each do |e1,e2|
+              %br
+              %span{style:"margin-left:40px;"}= e1 + ": " + e2
+  - if count==0
+    %td.error{colspan:"3"} 類似の条文は見つかりませんでした。
 

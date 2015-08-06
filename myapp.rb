@@ -132,8 +132,8 @@ class Similarity
     node1 = MeCab::Tagger.new.parseToNode(str1)
     node2 = MeCab::Tagger.new.parseToNode(str2)
 
-    vec1.push(node1.surface) while node1 = node1.next
-    vec2.push(node2.surface) while node2 = node2.next
+    vec1.push(node1.surface) if /^名詞/ =~ node1.feature while node1 = node1.next
+    vec2.push(node2.surface) if /^名詞/ =~ node2.feature while node2 = node2.next
     vec1.delete("")
     vec2.delete("")
 
