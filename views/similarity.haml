@@ -30,7 +30,7 @@
         %td= "第"+n.to_s+"条"
         %td
           %span= m["main"]
-          - if m["enum"].length != 0
+          -# if m["enum"].length != 0
             - m["enum"].each do |e1,e2|
               %br
               %span{style:"margin-left:40px;"}= e1 + ": " + e2
